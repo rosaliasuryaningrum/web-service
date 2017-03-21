@@ -1,12 +1,18 @@
-CREATE DATABASE akademik;
-USE akademik;
-CREATE TABLE mahasiswa(
-Nim Varchar(15) NOT NULL,
-Nama Varchar(150) NOT NULL,
-Alamat Varchar(150),
-Progdi Varchar(10);
-show tables;
-DESCRIBE mahasiswa;
-INSERT INTO mahasiswa VALUES
-('1501530036','Rosalia Suryaningrum','Semarang','Teknik Informatika');
-SELECT *FROM mahasiswa;
+<?php
+$host="localhost"; //replace with your hostname 
+$username="root"; //replace with your username 
+$password=""; //replace with your password 
+$dbname="akademik"; //replace with your database 
+$con=mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
+mysql_select_db("$dbname")or die("cannot select DB");
+
+$sql = "select * from mahasiswa"; //replace emp_info with your table name 
+$result = mysql_query($sql);
+$json = array();
+
+if(mysql_num_rows($result)){
+while($row=mysql_fetch_row($result)){
+$json['mahasiswa'][]=$row;
+}
+echo json_encode($json);
+}
